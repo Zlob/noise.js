@@ -1,0 +1,56 @@
+/*
+    Document   : src/TextNoise.css
+    Created on : 2016-05-12 06:59 PM
+    Author     : vamakin
+    Description:
+    Purpose of the stylesheet follows.
+    To change this template use Tools | Templates.
+*/
+.text-noise {
+    font-size: 2.4rem;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-family: Ubuntu,sans-serif;
+    font-weight: 300;
+}
+
+.text-noise__word {
+    margin-left:10px;
+    margin-right:10px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.text-noise__char {
+    margin-left:5px;
+    margin-right:5px;
+    text-transform:uppercase;
+    display: inline-block;
+    width: 34px;
+    height: 28px;
+}
+
+.text-noise__layer {
+    position: absolute;
+}
+
+.text-noise__red{
+    color: red;
+    z-index: 3;
+}
+
+.text-noise__green{
+    color: #0f0;
+    z-index: 2;
+}
+
+.text-noise__blue{
+    color: #00f;
+    z-index: 1;
+}
+
+.text-noise__main-layer{
+    color: white;
+    z-index: 4;
+}
