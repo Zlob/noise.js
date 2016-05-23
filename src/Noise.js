@@ -1,10 +1,3 @@
-/**
-* Created with Noise.
-* User: vamakin
-* Date: 2016-05-12
-* Time: 05:13 PM
-* To change this template use Tools | Templates.
-*/
 define(["/noise.js/src/Word.js", '/noise.js/src/Helper.js'], function(Word, Helper) {
     var TextNoise = function(selector, options){
         this.selector = selector;
