@@ -1,4 +1,4 @@
-define(['/noise.js/src/Char.js', '/noise.js/src/Helper.js'], function(Char, Helper) {
+define(['Char.js', 'Helper.js'], function(Char, Helper) {
     var Word = function(wordStr, maxOpacityDuration, maxCharsChangeDuration){
         this.maxOpacityDuration = maxOpacityDuration;
         this.maxCharsChangeDuration = maxCharsChangeDuration;

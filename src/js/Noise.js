@@ -1,4 +1,4 @@
-define(["/noise.js/src/Word.js", '/noise.js/src/Helper.js'], function(Word, Helper) {
+define(["Word.js", 'Helper.js'], function(Word, Helper) {
     var TextNoise = function(selector, options){
         this.selector = selector;
         this.currentStep = 0;

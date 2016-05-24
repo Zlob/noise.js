@@ -1,0 +1,46 @@
+.noise {
+    font-size: 2.4rem;
+    height: 28px;
+    line-height: 28px;
+    font-family: Ubuntu,sans-serif;
+    font-weight: 300;
+    display: block;
+    position: absolute;
+}
+
+.noise__word {
+    margin-left:10px;
+    margin-right:10px;
+    white-space: nowrap;
+}
+
+.noise__char {
+    margin-left:3px;
+    margin-right:3px;
+    display: inline-block;
+    text-align: center;
+    text-transform:uppercase;
+    width: 34px;
+    height: 28px;
+}
+
+
+.noise__red{
+    color: red;
+    z-index: 3;
+}
+
+.noise__green{
+    color: #0f0;
+    z-index: 2;
+}
+
+.noise__blue{
+    color: #00f;
+    z-index: 1;
+}
+
+.noise__main{
+    color: white;
+    z-index: 4;
+}
