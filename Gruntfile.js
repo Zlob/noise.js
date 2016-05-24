@@ -18,10 +18,8 @@ module.exports = function(grunt) {
         },
         copy: {
             main: {
-                files: [
-                    // includes files within path
-                    {expand: true, src: ['src/css/Noise.css'], dest: 'dest/'},
-                ],
+                src: 'src/css/Noise.css',
+                dest: 'dest/Noise.css'
             },
         },
     });
