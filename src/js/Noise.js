@@ -26,13 +26,8 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
     }
     
     TextNoise.prototype.start = function(){
-        var self = this;
-        var promise = new Promise(function(resolve, reject) {
-            self.status = 'started';
-            self.resolve = resolve;
-            self.animate();                
-        });
-        return promise;
+        this.status = 'started';
+        this.animate();
     }
 
     TextNoise.prototype.init = function(){
@@ -45,7 +40,6 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
     TextNoise.prototype.stop = function(){
         this.resetSplit();
         this.status = 'stopped';
-        this.resolve();
     }
 
     TextNoise.prototype.getWords = function(){
@@ -98,6 +92,17 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
 
 
         function step() {
+            console.log(1);
+            if(self.currentStep == self.maxOpacityDuration){
+                self.emit('fadeInFinished');
+            }
+            if(self.currentStep == self.maxCharsChangeDuration){
+                self.emit('charsChangeFinished');
+            }
+            if(self.currentStep == self.maxSplitRGDBDuration){
+                self.emit('splitRGBFinished');
+            }
+            
             if(self.currentStep >= self.maxOpacityDuration && self.currentStep >= self.maxCharsChangeDuration && self.currentStep >= self.maxSplitRGDBDuration){
                 self.stop();
             }
@@ -206,9 +211,11 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
     }
     
     TextNoise.prototype.emit = function(event){
-        this.events[event].forEach(function(f){
-            f();
-        })
+        if(this.events[event]){
+            this.events[event].forEach(function(f){
+                f();
+            })
+        }
     }
 
     return TextNoise;
