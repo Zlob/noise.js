@@ -6,6 +6,7 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         this.maxOpacityDuration = options.maxOpacityDuration || 150;
         this.maxCharsChangeDuration = options.maxCharsChangeDuration || 300;
         this.maxSplitRGDBDuration = options.maxSplitRGDBDuration || Infinity;
+        this.size = options.size || 'M';
         this.text = options.text || this.getText();
         
         this.status = '';
@@ -14,8 +15,8 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
             ['red'],
             ['green'],
             ['blue'],
-            ['red', 'green'],
-            ['green', 'blue'],
+//             ['red', 'green'],
+//             ['green', 'blue'],
             ['red', 'green', 'blue']
         ];               
     }
@@ -47,25 +48,25 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
     TextNoise.prototype.getWords = function(){
         var wordsArr = this.text.split(' ');
         wordsArr.forEach(function(wordStr){
-            this.words.push(new Word(wordStr, this.maxOpacityDuration, this.maxCharsChangeDuration));
+            this.words.push(new Word(wordStr, this.size, this.maxOpacityDuration, this.maxCharsChangeDuration));
         }, this);
     };        
 
     TextNoise.prototype.render = function(){   
         var wrapper = document.createElement('div');
-        wrapper.className += 'noise__wrapper';
+        wrapper.className += 'noise__wrapper-' +  this.size;
 
         var mainLayer = document.createElement('span');
-        mainLayer.className += 'noise noise__main';
+        mainLayer.className += 'noise-' + this.size + ' noise__main-' + this.size;
 
         var redLayer = document.createElement('span');
-        redLayer.className += 'noise noise__red';
+        redLayer.className += 'noise-' + this.size + ' noise__red-' + this.size;
 
         var greenLayer = document.createElement('span');
-        greenLayer.className += 'noise noise__green';
+        greenLayer.className += 'noise-' + this.size + ' noise__green-' + this.size;
 
         var blueLayer = document.createElement('span');
-        blueLayer.className += 'noise noise__blue';
+        blueLayer.className += 'noise-' + this.size + ' noise__blue-' + this.size;
 
         this.layers = {
             'red'   : redLayer,
@@ -123,16 +124,16 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
 
     TextNoise.prototype.splitRGB = function(){
         var action = Math.random();
-        if( action < 0.4 ){
+        if( action < 0.2 ){
             this.resetSplit();
-            var baseSplitInPixels = Helper.getRandomInt(-4, 4);
+            var baseSplitInPixels = Helper.getRandomInt(this.getMinSplit(), this.getMaxSplit());
             var colors = this.splitVariants[Helper.getRandomInt(0, this.splitVariants.length - 1)];
-
+            console.log(colors);
             for(var i = 0; i < colors.length; i++){
-                this.setSplit(colors[i], baseSplitInPixels * i);    
+                this.setSplit(colors[i], baseSplitInPixels * (i + 1));    
             }                
         }
-        else if( action < 0.6 ){
+        else if( action < 0.3 ){
             this.resetSplit();
         }
         else{
@@ -168,6 +169,30 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         element.innerHTML = '';
 
         return text;
+    };
+    
+    TextNoise.prototype.getMaxSplit = function(){
+        if(this.size == 'L'){
+            return 6;
+        }
+        if(this.size == 'M'){
+            return 4;
+        }
+        if(this.size == 'S'){
+            return 2;
+        }
+    };
+    
+    TextNoise.prototype.getMinSplit = function(){
+        if(this.size == 'L'){
+            return 3;
+        }
+        if(this.size == 'M'){
+            return 2;
+        }
+        if(this.size == 'S'){
+            return 1;
+        }
     };
 
     return TextNoise;

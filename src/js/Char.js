@@ -1,6 +1,7 @@
 define(['Helper.js'], function(Helper) {
-    var Char = function(character, maxOpacityDuration, maxCharsChangeDuration){
-        this.character = character;        
+    var Char = function(character, size, maxOpacityDuration, maxCharsChangeDuration){
+        this.character = character;
+        this.size = size;
         this.maxOpacityDuration = maxOpacityDuration;
         this.maxCharsChangeDuration = maxCharsChangeDuration;
         this.currentOpacity = 0;
@@ -22,7 +23,7 @@ define(['Helper.js'], function(Helper) {
     
     Char.prototype.getElement = function(){
         var element = document.createElement('span');
-        element.className += ' noise__char ';        
+        element.className += ' noise__char-' + this.size;        
         
         this.layerElements.push(element);    
         
