@@ -15,10 +15,12 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
             ['red'],
             ['green'],
             ['blue'],
-//             ['red', 'green'],
-//             ['green', 'blue'],
+            ['red', 'green'],
+            ['green', 'blue'],
             ['red', 'green', 'blue']
-        ];               
+        ];  
+        
+        this.init();
     }
     
     TextNoise.prototype.start = function(){
@@ -26,8 +28,6 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         var promise = new Promise(function(resolve, reject) {
             self.status = 'started';
             self.resolve = resolve;
-            self.init();
-            self.render();
             self.animate();                
         });
         return promise;
@@ -36,6 +36,7 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
     TextNoise.prototype.init = function(){
         this.hideOldText();
         this.getWords();
+        this.render();
         this.status = 'initialized';
     }
 
@@ -126,9 +127,8 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         var action = Math.random();
         if( action < 0.2 ){
             this.resetSplit();
-            var baseSplitInPixels = Helper.getRandomInt(this.getMinSplit(), this.getMaxSplit());
+            var baseSplitInPixels = Helper.getRandomInt(this.getMinSplit(), this.getMaxSplit()) * Helper.getRandomInt(-1, 1);
             var colors = this.splitVariants[Helper.getRandomInt(0, this.splitVariants.length - 1)];
-            console.log(colors);
             for(var i = 0; i < colors.length; i++){
                 this.setSplit(colors[i], baseSplitInPixels * (i + 1));    
             }                
@@ -159,7 +159,8 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         
         var hidenElement = document.createElement('div');
         hidenElement.innerHTML = this.text;
-        hidenElement.style.display = 'none';
+        hidenElement.style.visibility = 'hidden';
+        hidenElement.style.position = 'absolute';
         element.appendChild(hidenElement);
     };
 
