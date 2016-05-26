@@ -9,6 +9,8 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         this.size = options.size || 'M';
         this.text = options.text || this.getText();
         
+        this.events = [];
+        
         this.status = '';
         this.words = [];
         this.splitVariants = [
@@ -195,6 +197,19 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
             return 1;
         }
     };
+    
+    TextNoise.prototype.on = function(event, action, context){
+        if(!this.events[event]){
+            this.events[event] = [];
+        }
+        this.events[event].push(action.bind(context));
+    }
+    
+    TextNoise.prototype.emit = function(event){
+        this.events[event].forEach(function(f){
+            f();
+        })
+    }
 
     return TextNoise;
 });
