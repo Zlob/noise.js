@@ -89,7 +89,8 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
 
     TextNoise.prototype.animate = function(){
         var self = this;
-
+        
+        
 
         function step() {
             console.log(1);
@@ -114,7 +115,8 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
             requestAnimationFrame(step);
 
             if(self.currentStep <= self.maxSplitRGDBDuration){
-                self.splitRGB();    
+                self.getSplitRGB();  
+                self.setSplitRGB();  
             }
 
             if(self.currentStep <= self.maxOpacityDuration || self.currentStep <= self.maxCharsChangeDuration){
@@ -129,25 +131,44 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         }
         step();
     }
+    
+    TextNoise.prototype.getSplitRGB = function(){
+        var currentTime = Date.now();
+        if(!this.__proto__.splitTime || (currentTime - this.__proto__.splitTime) > 10){
+            this.__proto__.splitTime = currentTime;
+            var action = Math.random();
+            if( action < 0.2 ){
+                this.__proto__.splitType = 'split';
+                this.__proto__.colors = this.splitVariants[Helper.getRandomInt(0, this.splitVariants.length - 1)];
+                this.__proto__.baseSplitInPixels = Helper.getRandomInt(-5, 5);             
+            }
+            else if( action < 0.3 ){
+                this.__proto__.splitType = 'reset';
+            }
+            else{
+                this.__proto__.splitType = 'nothing';
+            }
+        }
 
-    TextNoise.prototype.splitRGB = function(){
-        var action = Math.random();
-        if( action < 0.2 ){
+    }
+    
+    TextNoise.prototype.setSplitRGB = function(){
+        if( this.__proto__.splitType == 'split'){
             this.resetSplit();
-            var baseSplitInPixels = Helper.getRandomInt(this.getMinSplit(), this.getMaxSplit()) * Helper.getRandomInt(-1, 1);
-            var colors = this.splitVariants[Helper.getRandomInt(0, this.splitVariants.length - 1)];
-            for(var i = 0; i < colors.length; i++){
-                this.setSplit(colors[i], baseSplitInPixels * (i + 1));    
+            for(var i = 0; i < this.__proto__.colors.length; i++){
+                var base = this.__proto__.baseSplitInPixels;
+                var rate = (i + 1);
+                var direction = Math.pow(-1, (i+1));
+                this.setSplit(this.__proto__.colors[i], base * rate * direction);    
             }                
         }
-        else if( action < 0.3 ){
+        else if( this.__proto__.splitType == 'reset' ){
             this.resetSplit();
         }
         else{
             //nothing
         }
     }
-
 
     TextNoise.prototype.setSplit = function(color, split){
         this.layers[color].style.marginLeft = split + 'px';   
@@ -177,30 +198,6 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         element.innerHTML = '';
 
         return text;
-    };
-    
-    TextNoise.prototype.getMaxSplit = function(){
-        if(this.size == 'L'){
-            return 6;
-        }
-        if(this.size == 'M'){
-            return 4;
-        }
-        if(this.size == 'S'){
-            return 2;
-        }
-    };
-    
-    TextNoise.prototype.getMinSplit = function(){
-        if(this.size == 'L'){
-            return 3;
-        }
-        if(this.size == 'M'){
-            return 2;
-        }
-        if(this.size == 'S'){
-            return 1;
-        }
     };
     
     TextNoise.prototype.on = function(event, action, context){
