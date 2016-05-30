@@ -25,16 +25,17 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         this.init();
     }
     
-    TextNoise.prototype.start = function(){
-        this.status = 'started';
-        this.animate();
-    }
-
     TextNoise.prototype.init = function(){
         this.hideOldText();
         this.getWords();
         this.render();
         this.status = 'initialized';
+    }
+    
+    TextNoise.prototype.start = function(){
+        this.currentStep = 0;
+        this.status = 'started';
+        this.animate();
     }
 
     TextNoise.prototype.stop = function(){
@@ -88,12 +89,9 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
     }
 
     TextNoise.prototype.animate = function(){
-        var self = this;
-        
-        
+        var self = this;   
 
         function step() {
-            console.log(1);
             if(self.currentStep == self.maxOpacityDuration){
                 self.emit('fadeInFinished');
             }

@@ -49,7 +49,7 @@ define(['Helper.js'], function(Helper) {
     
     Char.prototype.changeChar = function(){
         if(this.currentStep < this.changeCharLastStep){
-            if(Math.random() > 0.5){
+            if(Math.random() > 0.75){
                 var randomChar = Helper.getRandomChar();
                 this.layerElements.forEach(function(layer){
                     layer.innerHTML = randomChar;
