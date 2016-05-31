@@ -2,23 +2,21 @@ define(['Helper.js'], function(Helper) {
     var Char = function(character, size, maxOpacityDuration, maxCharsChangeDuration){
         this.character = character;
         this.size = size;
-        this.maxOpacityDuration = maxOpacityDuration;
-        this.maxCharsChangeDuration = maxCharsChangeDuration;
-        this.currentOpacity = 0;
-        this.opacityPerStep = this.getOpacityPerStep();
+        this.currentOpacity = 0;        
         this.currentStep = 0;
-        this.changeCharLastStep = this.getChangeCharLastStep()
+        this.setOpacityPerStep(maxOpacityDuration);
+        this.setChangeCharLastStep(maxCharsChangeDuration);
         this.layerElements = [];  
     }
     
-    Char.prototype.getOpacityPerStep = function(){
-        var steps = Helper.getRandomInt(1, this.maxOpacityDuration);
-        return 1 / steps;
+    Char.prototype.setOpacityPerStep = function(maxOpacityDuration){
+        var steps = Helper.getRandomInt(1, maxOpacityDuration);
+        this.opacityPerStep = 1 / steps;
     }
     
-    Char.prototype.getChangeCharLastStep = function(){
-        var steps = Helper.getRandomInt(this.maxCharsChangeDuration * 0.5, this.maxCharsChangeDuration);
-        return steps;
+    Char.prototype.setChangeCharLastStep = function(maxCharsChangeDuration){
+        var steps = Helper.getRandomInt(maxCharsChangeDuration * 0.5, maxCharsChangeDuration);
+        this.changeCharLastStep = steps;
     }    
     
     Char.prototype.getElement = function(){
@@ -36,6 +34,10 @@ define(['Helper.js'], function(Helper) {
         //animate chars changing
         this.changeChar();
         this.currentStep ++;            
+    }
+    
+    Char.prototype.resetCurrentStep = function(){
+        this.currentStep = 0;
     }
     
     Char.prototype.changeOpacity = function(){

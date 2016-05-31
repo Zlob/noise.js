@@ -7,7 +7,7 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         this.maxCharsChangeDuration = options.maxCharsChangeDuration || 300;
         this.maxSplitRGDBDuration = options.maxSplitRGDBDuration || Infinity;
         this.size = options.size || 'M';
-        this.text = options.text || this.getText();
+        this.setText();
         
         this.events = [];
         
@@ -33,14 +33,43 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
     }
     
     TextNoise.prototype.start = function(){
-        this.currentStep = 0;
-        this.status = 'started';
-        this.animate();
+        var self = this;
+        if(self.status != 'started'){
+            self.currentStep = 0;
+            self.status = 'started';
+            self.words.forEach(function(word){
+                word.chars.forEach(function(char){
+                    char.resetCurrentStep();
+                });
+            });
+            self.animate();
+        }
     }
+    
 
     TextNoise.prototype.stop = function(){
-        this.resetSplit();
-        this.status = 'stopped';
+        var self = this;
+        if(self.status == 'started'){
+            self.currentStep = 0;
+            self.maxSplitRGDBDuration = 60;
+            self.maxOpacityDuration = 60;
+            self.maxCharsChangeDuration = 60;
+            self.words.forEach(function(word){
+                word.chars.forEach(function(char){
+                    char.resetCurrentStep();
+                    char.setChangeCharLastStep(60);
+                });
+            });
+        }
+    }
+    
+    TextNoise.prototype.pause = function(){
+        this.status = 'paused';
+    }
+    
+    TextNoise.prototype.resume = function(){
+        this.status = 'started';
+        this.animate();
     }
 
     TextNoise.prototype.getWords = function(){
@@ -101,31 +130,30 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
             if(self.currentStep == self.maxSplitRGDBDuration){
                 self.emit('splitRGBFinished');
             }
-            
-            if(self.currentStep >= self.maxOpacityDuration && self.currentStep >= self.maxCharsChangeDuration && self.currentStep >= self.maxSplitRGDBDuration){
-                self.stop();
-            }
+                        
+            if(self.status == 'started'){
+                if(self.currentStep <= self.maxSplitRGDBDuration){
+                    self.getSplitRGB();  
+                    self.setSplitRGB();  
+                }
 
-            if(self.status == 'stopped'){
-                return;
-            }
-
-            requestAnimationFrame(step);
-
-            if(self.currentStep <= self.maxSplitRGDBDuration){
-                self.getSplitRGB();  
-                self.setSplitRGB();  
-            }
-
-            if(self.currentStep <= self.maxOpacityDuration || self.currentStep <= self.maxCharsChangeDuration){
                 self.words.forEach(function(word){
                     word.chars.forEach(function(char){
                         char.animate();
                     });
                 });
-            }
+                
+                if(self.currentStep >= Math.max(self.maxOpacityDuration, self.maxCharsChangeDuration, self.maxSplitRGDBDuration)){
+                    console.log('stop!');
+                    self.resetSplit();
+                    self.status = 'stopped';
+                    return;
+                }
 
-            self.currentStep++;
+                self.currentStep++;
+
+                requestAnimationFrame(step);
+            }
         }
         step();
     }
@@ -181,7 +209,6 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
 
     TextNoise.prototype.hideOldText = function(){
         var element = document.querySelector(this.selector);
-        element.innerHTML = '';
         
         var hidenElement = document.createElement('div');
         hidenElement.innerHTML = this.text;
@@ -190,12 +217,12 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         element.appendChild(hidenElement);
     };
 
-    TextNoise.prototype.getText = function(){
+    TextNoise.prototype.setText = function(){
         var element = document.querySelector(this.selector);
         var text = element.innerHTML;
         element.innerHTML = '';
 
-        return text;
+        this.text = text;
     };
     
     TextNoise.prototype.on = function(event, action, context){
