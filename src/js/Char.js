@@ -1,7 +1,7 @@
 define(['Helper.js'], function(Helper) {
-    var Char = function(character, size, maxOpacityDuration, maxCharsChangeDuration){
+    var Char = function(character, height, maxOpacityDuration, maxCharsChangeDuration){
         this.character = character;
-        this.size = size;
+        this.height = height;
         this.currentOpacity = 0;        
         this.currentStep = 0;
         this.setOpacityPerStep(maxOpacityDuration);
@@ -15,14 +15,19 @@ define(['Helper.js'], function(Helper) {
     }
     
     Char.prototype.setChangeCharLastStep = function(maxCharsChangeDuration){
-        var steps = Helper.getRandomInt(maxCharsChangeDuration * 0.5, maxCharsChangeDuration);
-        this.changeCharLastStep = steps;
+        if(maxCharsChangeDuration == Infinity){
+            this.changeCharLastStep = Infinity;
+        }
+        else{
+            var steps = Helper.getRandomInt(maxCharsChangeDuration * 0.5, maxCharsChangeDuration);    
+            this.changeCharLastStep = steps;
+        }        
     }    
     
     Char.prototype.getElement = function(){
         var element = document.createElement('span');
-        element.className += ' noise__char-' + this.size;        
-        
+        element.className += ' noise__char';        
+        element.style.width = this.height + 'px';
         this.layerElements.push(element);    
         
         return element;
