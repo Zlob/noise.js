@@ -82,12 +82,14 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
     }
     
     TextNoise.prototype.pause = function(){
-        this.status = 'paused';
+        var self = this;
+        self.status = 'paused';
     }
     
     TextNoise.prototype.resume = function(){
-        this.status = 'started';
-        this.animate();
+        var self = this;
+        self.status = 'started';
+        self.animate();
     }
 
     TextNoise.prototype.getWords = function(){
@@ -170,7 +172,6 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
                 });
                 
                 if(self.currentStep >= Math.max(self.maxOpacityDuration, self.maxCharsChangeDuration, self.maxSplitRGDBDuration)){
-                    console.log('stop!');
                     self.resetSplit();
                     self.status = 'stopped';
                     return;
@@ -245,10 +246,16 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
 
     TextNoise.prototype.setText = function(){
         var element = document.querySelector(this.selector);
+        var childes = element.children.length;
+        if(childes !== 0){
+            throw new Error('elemnt "' + this.selector + '" has child elements');
+        }
         var text = element.innerHTML;
+        if(text.length === 0){
+            throw new Error('elemnt "' + this.selector + '" is empty');
+        }
         this.height = element.offsetHeight;        
         this.text = text;
-        console.log(this.height);
         element.innerHTML = '';
     };
     
