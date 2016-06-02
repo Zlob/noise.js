@@ -262,16 +262,25 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
         element.innerHTML = '';
     };
     
-    TextNoise.prototype.on = function(event, action, context){
+    TextNoise.prototype.on = function(event, action, context, once){
         if(!this.events[event]){
             this.events[event] = [];
         }
-        this.events[event].push(action.bind(context));
+        this.events[event].push({
+            action: action.bind(context),
+            isTriggered: false,
+            isOnce: once || false
+        });
     }
     
     TextNoise.prototype.emit = function(event){
         if(this.events[event]){
-            this.events[event].forEach(function(f){
+            this.events[event].forEach(function(event){
+                if(event.isTriggered && event.isOnce){
+                    return;
+                }
+                event.isTriggered = true;
+                var f = event.action;
                 f();
             })
         }
