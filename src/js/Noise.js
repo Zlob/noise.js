@@ -246,13 +246,16 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
 
     TextNoise.prototype.setText = function(){
         var element = document.querySelector(this.selector);
+        if(element == null){
+            throw new Error('elemnt by selector "' + this.selector + '" is not exist');
+        }
         var childes = element.children.length;
         if(childes !== 0){
-            throw new Error('elemnt "' + this.selector + '" has child elements');
+            throw new Error('elemnt by selector "' + this.selector + '" has child elements');
         }
         var text = element.innerHTML;
         if(text.length === 0){
-            throw new Error('elemnt "' + this.selector + '" is empty');
+            throw new Error('elemnt by selector "' + this.selector + '" is empty');
         }
         this.height = element.offsetHeight;        
         this.text = text;
