@@ -67,6 +67,9 @@ define(["Word.js", 'Helper.js'], function(Word, Helper) {
 
     TextNoise.prototype.stop = function(){
         var self = this;
+        if(self.status == 'initialized'){
+            self.start();
+        }
         if(self.status == 'started'){
             self.currentStep = 0;
             self.maxSplitRGDBDuration = 60;
