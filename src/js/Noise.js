@@ -1,8 +1,8 @@
 define(["Word.js", 'Helper.js'], function(Word, Helper) {
-    var TextNoise = function(selector, options){
-        this.selector = selector;
-        this.currentStep = 0;
+    var TextNoise = function(options){
         
+        this.currentStep = 0;
+        this.selector = options.selector;
         this.maxOpacityDuration = options.maxOpacityDuration || 150;
         this.maxCharsChangeDuration = options.maxCharsChangeDuration || 300;
         this.maxSplitRGDBDuration = options.maxSplitRGDBDuration || Infinity;
