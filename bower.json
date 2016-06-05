@@ -1,0 +1,7 @@
+{
+  "name": "nois.js gh-pages",
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "requirejs": "^2.2.0"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "noise.js",
+  "version": "1.0.0",
+  "description": "JavasSript text animation library. Combination of fadeIn, chars changing and split RGB effects",
+  "main": "dist/main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.1",
+    "grunt-contrib-less": "^1.3.0",
+    "grunt-contrib-requirejs": "^1.0.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "less": "^2.7.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zlob/noise.js.git"
+  },
+  "keywords": [
+    "JavaScript",
+    "Noise",
+    "Animation"
+  ],
+  "author": "vamakin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Zlob/noise.js/issues"
+  },
+  "homepage": "https://zlob.github.io/noise.js"
+}

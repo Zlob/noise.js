@@ -1,0 +1,47 @@
+
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #031321;
+}
+
+.header {
+    color:  #031321;
+}
+
+.fill { 
+    min-height: 100%;
+    padding-bottom: 30px;
+}
+
+.black {
+    background-color: #031321;
+}
+
+.main-view {
+    display: none;
+    background-color: white;
+}
+
+footer {
+    display: none;
+    padding-top: 15px;
+    background-color: #031321;
+    height: 50px;
+    color: white;
+}
+
+.zlob {
+    color: white;
+}
+
+.star {
+    padding-top: 35px;
+    padding-bottom: 10px;
+}
+
+.skip {
+    margin-left: 48px;
+}

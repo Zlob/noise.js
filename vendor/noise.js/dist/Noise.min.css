@@ -1,0 +1,1 @@
+.noise__blue,.noise__green,.noise__main,.noise__red{position:relative}.noise{display:block}.noise__word{white-space:nowrap}.noise__char{font-family:Ubuntu,sans-serif;text-align:center;text-transform:uppercase;display:inline-block}.noise__red{color:red;z-index:3}.noise__green{color:#0F0;z-index:2}.noise__blue{color:#00F;z-index:1}.noise__main{color:#fff;z-index:4}

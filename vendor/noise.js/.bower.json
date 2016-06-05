@@ -1,0 +1,32 @@
+{
+  "name": "noise.js",
+  "description": "JavasSript text animation library. Combination of fadeIn, chars changing and split RGB effects",
+  "main": "dist/main.js",
+  "authors": [
+    "vamakin"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "JavaScript",
+    "Noise",
+    "Animation"
+  ],
+  "homepage": "https://zlob.github.io/noise.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "e9b13ec092",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "e9b13ec092663259e8720b252dc4376263c7beb4"
+  },
+  "_source": "https://github.com/Zlob/noise.js.git",
+  "_target": "*",
+  "_originalSource": "noise.js",
+  "_direct": true
+}
