@@ -1,7 +1,7 @@
 {
   "name": "noise.js",
   "version": "1.0.0",
-  "description": "JavasSript text animation library",
+  "description": "JavasSript text animation library. Combination of fadeIn, chars changing and split RGB effects",
   "main": "dist/main.js",
   "dependencies": {},
   "devDependencies": {
@@ -30,5 +30,5 @@
   "bugs": {
     "url": "https://github.com/Zlob/noise.js/issues"
   },
-  "homepage": "https://github.com/Zlob/noise.js#readme"
+  "homepage": "https://zlob.github.io/noise.js"
 }
