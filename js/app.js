@@ -1,7 +1,7 @@
 requirejs.config({
     baseUrl: '/',
     paths: {
-        Noise: "noise.js/dist/Noise.min",
+        Noise: "vendor/noise.js/dist/Noise.min",
     }
 });
 
